@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,43 +24,55 @@ public class Main {
                     scanner.nextLine();  // Consume newline
                     System.out.print("Enter Student ID: ");
                     String id = scanner.nextLine();
+                    if (id.isEmpty()) {
+                        throw new IllegalArgumentException("Student ID cannot be empty.");
+                    }
                     System.out.print("Enter Student Name: ");
                     String name = scanner.nextLine();
+                    if (name.isEmpty()) {
+                        throw new IllegalArgumentException("Student Name cannot be empty.");
+                    }
                     System.out.print("Enter Student Marks: ");
                     double marks = scanner.nextDouble();
+                    if (marks < 0 || marks > 10) {
+                        throw new IllegalArgumentException("Marks must be between 0 and 10.");
+                    }
                     studentManagement.addStudent(new Student(id, name, marks));
                     System.out.println("Student added successfully!");
                     break;
                 case 2:
                     // Remove student
-                    Student removedStudent = studentManagement.removeStudent();
+                    System.out.print("Enter Student ID to remove: ");
+                    scanner.nextLine();  // Consume newline
+                    String removeId = scanner.nextLine();
+                    Student removedStudent = studentManagement.searchStudent(removeId);
                     if (removedStudent != null) {
-                        System.out.println("Removed student: " + removedStudent);
-                    } else {
-                        System.out.println("No student to remove.");
+                        studentManagement.removeStudent();
+                        System.out.println("Student removed successfully!");
                     }
                     break;
 
                 case 3:
                     // Update student marks
-                    scanner.nextLine();
                     System.out.print("Enter Student ID to update: ");
+                    scanner.nextLine();  // Consume newline
                     String updateId = scanner.nextLine();
                     System.out.print("Enter new marks: ");
                     double newMarks = scanner.nextDouble();
+                    if (newMarks < 0 || newMarks > 10) {
+                        throw new IllegalArgumentException("Marks must be between 0 and 10.");
+                    }
                     studentManagement.updateStudent(updateId, newMarks);
                     break;
 
                 case 4:
                     // Search student by ID
-                    scanner.nextLine();
                     System.out.print("Enter Student ID to search: ");
+                    scanner.nextLine();  // Consume newline
                     String searchId = scanner.nextLine();
-                    Student found = studentManagement.searchStudent(searchId);
-                    if (found != null) {
-                        System.out.println("Found student: " + found);
-                    } else {
-                        System.out.println("Student not found.");
+                    Student foundStudent = studentManagement.searchStudent(searchId);
+                    if (foundStudent != null) {
+                        System.out.println(foundStudent);
                     }
                     break;
 
@@ -78,7 +89,6 @@ public class Main {
                     }
                     break;
 
-
                 case 6:
                     // Display all students
                     System.out.println("All students:");
@@ -86,12 +96,13 @@ public class Main {
                     break;
 
                 case 7:
+                    // Exit
                     System.out.println("Exiting...");
                     scanner.close();
-                    return;
+                    return; // Exit the program
 
                 default:
-                    System.out.println("Invalid choice! Please choose a valid option.");
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
     }

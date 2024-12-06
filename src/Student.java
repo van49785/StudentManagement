@@ -21,7 +21,6 @@ public class Student {
     }
 
     public String getRanking(){
-
         if (marks < 5) return "Fail";
         else if (marks < 6.5) return "Medium";
         else if (marks < 7.5) return "Good";
@@ -35,8 +34,10 @@ public class Student {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", marks=" + marks +
+                ", rank=" + getRanking() +
                 '}';
     }
+
 }
 
 

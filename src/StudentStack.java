@@ -1,8 +1,8 @@
 public class StudentStack {
 
-    private int maxSize;
-    private Student[] stackArray;
-    private int top;
+    int maxSize;
+    private static Student[] stackArray;
+    private static int top;
 
     public StudentStack(int size) {
         this.maxSize = size;
